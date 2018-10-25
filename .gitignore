@@ -1,0 +1,7 @@
+node_modules/
+.iml
+npm-debug.log
+.vscode
+.DS_STORE
+reports/%
+package-lock.json
