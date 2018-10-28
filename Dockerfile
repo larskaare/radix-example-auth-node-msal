@@ -20,11 +20,13 @@ RUN npm install
 #
 # Running test 
 #
-# FROM dependencies as test
-# WORKDIR /usr/src/app
+FROM dependencies as test
+WORKDIR /usr/src/app
 # COPY test test
 # COPY src src
 # RUN ["npm","test"]
+COPY .eslintrc.js .eslintignore ./
+RUN npm run lint
 
 #
 # Release image
