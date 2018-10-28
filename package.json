@@ -6,9 +6,9 @@
     "type": "git",
     "url": "https://github.com/larskaare/radix-example-auth-node-msal.git"
   },
-  "main": "app.js",
+  "main": "src/app.js",
   "scripts": {
-    "start": "node app.js | ./node_modules/bunyan/bin/bunyan",
+    "start": "node src/app.js | ./node_modules/bunyan/bin/bunyan",
     "test": "",
     "lint": "node ./node_modules/eslint/bin/eslint.js . --ext .js"
   },

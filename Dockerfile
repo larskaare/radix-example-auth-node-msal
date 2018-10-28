@@ -2,9 +2,11 @@
 # -- Base node image with app
 #
 FROM node:10-alpine AS base
-RUN mkdir -p /usr/src/app/{routes,views}
+RUN mkdir -p /usr/src/app/{src,config,routes,views}
 WORKDIR /usr/src/app
-COPY package.json package-lock.json app.js config.js ./
+COPY package.json package-lock.json ./
+COPY src src
+COPY config config
 COPY routes routes
 COPY views views
 
