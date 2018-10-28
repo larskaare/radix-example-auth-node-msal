@@ -14,7 +14,7 @@ var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var passport = require('passport');
 var bunyan = require('bunyan');
-var config = require('./config');
+var config = require('../config/config');
 
 var OIDCStrategy = require('passport-azure-ad').OIDCStrategy;
 
