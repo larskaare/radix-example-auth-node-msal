@@ -1,17 +1,17 @@
 {
   "name": "radix-example-auth-node-msal",
   "version": "0.0.1",
-  "description": "A Radix Example App - Authentication using MSAL",
+  "description": "Radix Example Add - OIDC Auth",
   "repository": {
     "type": "git",
     "url": "https://github.com/larskaare/radix-example-auth-node-msal.git"
   },
   "main": "app.js",
   "scripts": {
-    "test": "",
-    "start": "node app.js | bunyan"
+    "start": "node app.js | ./node_modules/bunyan/bin/bunyan",
+    "test": ""
   },
-  "author": "Lars Kåre Skjørestad",
+  "author": "Lars Kaare Skjorestad",
   "license": "MIT",
   "dependencies": {
     "@microsoft/microsoft-graph-client": "^1.3.0",
