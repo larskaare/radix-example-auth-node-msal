@@ -1,6 +1,18 @@
 {
   "name": "radix-example-auth-node-msal",
   "version": "0.0.1",
+  "description": "A Radix Example App - Authentication using MSAL",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/larskaare/radix-example-auth-node-msal.git"
+  },
+  "main": "app.js",
+  "scripts": {
+    "test": "",
+    "start": "node app.js | bunyan"
+  },
+  "author": "Lars Kåre Skjørestad",
+  "license": "MIT",
   "dependencies": {
     "@microsoft/microsoft-graph-client": "^1.3.0",
     "assert-plus": "*",
