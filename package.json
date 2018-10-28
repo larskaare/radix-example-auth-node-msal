@@ -9,7 +9,8 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js | ./node_modules/bunyan/bin/bunyan",
-    "test": ""
+    "test": "",
+    "lint": "node ./node_modules/eslint/bin/eslint.js . --ext .js"
   },
   "author": "Lars Kaare Skjorestad",
   "license": "MIT",
@@ -26,5 +27,8 @@
     "method-override": "^2.3.6",
     "passport": "*",
     "passport-azure-ad": "^3.0.12"
+  },
+  "devDependencies": {
+    "eslint": "^5.8.0"
   }
 }

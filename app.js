@@ -13,7 +13,6 @@ var expressSession = require('express-session');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var passport = require('passport');
-var util = require('util');
 var bunyan = require('bunyan');
 var config = require('./config');
 
@@ -23,7 +22,7 @@ var log = bunyan.createLogger({
     name: 'Microsoft OIDC Example Web Application'
 });
 
-const MicrosoftGraph = require("@microsoft/microsoft-graph-client");
+const MicrosoftGraph = require('@microsoft/microsoft-graph-client');
 
 /******************************************************************************
  * Set up passport in the app 
@@ -36,27 +35,27 @@ const MicrosoftGraph = require("@microsoft/microsoft-graph-client");
 // the user by ID when deserializing.
 //-----------------------------------------------------------------------------
 passport.serializeUser(function(user, done) {
-  done(null, user.oid);
+    done(null, user.oid);
 });
 
 passport.deserializeUser(function(oid, done) {
-  findByOid(oid, function (err, user) {
-    done(err, user);
-  });
+    findByOid(oid, function (err, user) {
+        done(err, user);
+    });
 });
 
 // array to hold logged in users
 var users = [];
 
 var findByOid = function(oid, fn) {
-  for (var i = 0, len = users.length; i < len; i++) {
-    var user = users[i];
-   log.info('we are using user: ', user);
-    if (user.oid === oid) {
-      return fn(null, user);
+    for (var i = 0, len = users.length; i < len; i++) {
+        var user = users[i];
+        log.info('we are using user: ', user);
+        if (user.oid === oid) {
+            return fn(null, user);
+        }
     }
-  }
-  return fn(null, null);
+    return fn(null, null);
 };
 
 //-----------------------------------------------------------------------------
@@ -95,8 +94,8 @@ passport.use(new OIDCStrategy({
     useCookieInsteadOfSession: config.creds.useCookieInsteadOfSession,
     cookieEncryptionKeys: config.creds.cookieEncryptionKeys,
     clockSkew: config.creds.clockSkew,
-  },
-  function(iss, sub, profile, accessToken, refreshToken, done) {
+},
+function(iss, sub, profile, accessToken, refreshToken, done) {
     
     console.log('Access token :', accessToken);
     console.log('Refesh token :', refreshToken);
@@ -106,23 +105,23 @@ passport.use(new OIDCStrategy({
     profile.refreshToken = refreshToken;
     
     if (!profile.oid) {
-      return done(new Error("No oid found"), null);
+        return done(new Error('No oid found'), null);
     }
     // asynchronous verification, for effect...
     process.nextTick(function () {
-      findByOid(profile.oid, function(err, user) {
-        if (err) {
-          return done(err);
-        }
-        if (!user) {
-          // "Auto-registration"
-          users.push(profile);
-          return done(null, profile);
-        }
-        return done(null, user);
-      });
+        findByOid(profile.oid, function(err, user) {
+            if (err) {
+                return done(err);
+            }
+            if (!user) {
+                // "Auto-registration"
+                users.push(profile);
+                return done(null, profile);
+            }
+            return done(null, user);
+        });
     });
-  }
+}
 ));
 
 
@@ -161,20 +160,20 @@ app.use(express.static(__dirname + '/../../public'));
 // it will call `passport.authenticate` to ask for user to log in.
 //-----------------------------------------------------------------------------
 function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
-  res.redirect('/login');
-};
+    if (req.isAuthenticated()) { return next(); }
+    res.redirect('/login');
+}
 
 app.get('/', function(req, res) {
-  console.log('Users : ', users.length);
-  res.render('index', { user: req.user });
+    console.log('Users : ', users.length);
+    res.render('index', { user: req.user });
 });
 
 // '/account' is only available to logged in user
-app.get('/account', ensureAuthenticated, function(req, res, next) {
+app.get('/account', ensureAuthenticated, function(req, res) {
   
 
-  res.render('account', { user: req.user });
+    res.render('account', { user: req.user });
 });
 
 //
@@ -183,35 +182,35 @@ app.get('/account', ensureAuthenticated, function(req, res, next) {
 app.get('/manager', ensureAuthenticated, function(req, res, next) {
   
  
-  // console.log(users[0]);
+    // console.log(users[0]);
 
 
-  var client = MicrosoftGraph.Client.init({
-    authProvider: (done) => {
-        done(null, req.user.accessToken); //first parameter takes an error if you can't get an access token
-    }
-  });
+    var client = MicrosoftGraph.Client.init({
+        authProvider: (done) => {
+            done(null, req.user.accessToken); //first parameter takes an error if you can't get an access token
+        }
+    });
 
-  var manager;
+    var manager;
 
-  client
-    .api('me/manager')
-    .get((err, res) => {
+    client
+        .api('me/manager')
+        .get((err, res) => {
         // console.log(res); // prints info about authenticated user
         
-        manager = res;
-        console.log('Manager:' + JSON.stringify(manager));
-        req.user.manager = manager;
+            manager = res;
+            console.log('Manager:' + JSON.stringify(manager));
+            req.user.manager = manager;
 
-        next();
+            next();
         
-      });
+        });
    
 
-  }, function(req, res) { 
+}, function(req, res) { 
  
-  console.log('Returning manager');  
-  res.status(200).send(JSON.stringify(req.user.manager.displayName));
+    console.log('Returning manager');  
+    res.status(200).send(JSON.stringify(req.user.manager.displayName));
      
 });
 
@@ -219,63 +218,63 @@ app.get('/manager', ensureAuthenticated, function(req, res, next) {
 
 
 app.get('/login',
-  function(req, res, next) {
-    passport.authenticate('azuread-openidconnect', 
-      { 
-        response: res,                      // required
-        resourceURL: config.resourceURL,    // optional. Provide a value if you want to specify the resource.
-        customState: 'my_state',            // optional. Provide a value if you want to provide custom state value.
-        failureRedirect: '/' 
-      }
-    )(req, res, next);
-  },
-  function(req, res) {
-    log.info('Login was called in the Sample');
-    res.redirect('/');
-});
+    function(req, res, next) {
+        passport.authenticate('azuread-openidconnect', 
+            { 
+                response: res,                      // required
+                resourceURL: config.resourceURL,    // optional. Provide a value if you want to specify the resource.
+                customState: 'my_state',            // optional. Provide a value if you want to provide custom state value.
+                failureRedirect: '/' 
+            }
+        )(req, res, next);
+    },
+    function(req, res) {
+        log.info('Login was called in the Sample');
+        res.redirect('/');
+    });
 
 // 'GET returnURL'
 // `passport.authenticate` will try to authenticate the content returned in
 // query (such as authorization code). If authentication fails, user will be
 // redirected to '/' (home page); otherwise, it passes to the next middleware.
 app.get('/auth/openid/return',
-  function(req, res, next) {
-    passport.authenticate('azuread-openidconnect', 
-      { 
-        response: res,                      // required
-        failureRedirect: '/'  
-      }
-    )(req, res, next);
-  },
-  function(req, res) {
-    log.info('We received a return from AzureAD.');
-    res.redirect('/');
-  });
+    function(req, res, next) {
+        passport.authenticate('azuread-openidconnect', 
+            { 
+                response: res,                      // required
+                failureRedirect: '/'  
+            }
+        )(req, res, next);
+    },
+    function(req, res) {
+        log.info('We received a return from AzureAD.');
+        res.redirect('/');
+    });
 
 // 'POST returnURL'
 // `passport.authenticate` will try to authenticate the content returned in
 // body (such as authorization code). If authentication fails, user will be
 // redirected to '/' (home page); otherwise, it passes to the next middleware.
 app.post('/auth/openid/return',
-  function(req, res, next) {
-    passport.authenticate('azuread-openidconnect', 
-      { 
-        response: res,                      // required
-        failureRedirect: '/'  
-      }
-    )(req, res, next);
-  },
-  function(req, res) {
-    log.info('We received a return from AzureAD.');
-    res.redirect('/');
-  });
+    function(req, res, next) {
+        passport.authenticate('azuread-openidconnect', 
+            { 
+                response: res,                      // required
+                failureRedirect: '/'  
+            }
+        )(req, res, next);
+    },
+    function(req, res) {
+        log.info('We received a return from AzureAD.');
+        res.redirect('/');
+    });
 
 // 'logout' route, logout from passport, and destroy the session with AAD.
 app.get('/logout', function(req, res){
-  req.session.destroy(function(err) {
-    req.logOut();
-    res.redirect(config.destroySessionUrl);
-  });
+    req.session.destroy(function() {
+        req.logOut();
+        res.redirect(config.destroySessionUrl);
+    });
 });
 
 app.listen(3000);
