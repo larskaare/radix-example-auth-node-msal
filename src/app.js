@@ -24,6 +24,18 @@ var log = bunyan.createLogger({
 
 const MicrosoftGraph = require('@microsoft/microsoft-graph-client');
 
+
+// Reading vital condif from environment variables
+//
+const localConfig={};
+
+localConfig.IDENTITYMETADATA = (process.env.IDENTITYMETADATA || config.creds.identityMetadata);
+localConfig.CLIENTID = (process.env.CLIENTID || config.creds.clientID);
+localConfig.REDIRECTURL = (process.env.REDIRECTURL || config.creds.redirectUrl);
+localConfig.CLIENTSECRET = (process.env.CLIENTSECRET || config.creds.clientSecret);
+localConfig.DESTROYSESSIONURL = (process.env.DESTROYSESSIONURL || config.destroySessionUrl);
+
+
 /******************************************************************************
  * Set up passport in the app 
  ******************************************************************************/
@@ -76,13 +88,13 @@ var findByOid = function(oid, fn) {
 // To do prototype (6), passReqToCallback must be set to true in the config.
 //-----------------------------------------------------------------------------
 passport.use(new OIDCStrategy({
-    identityMetadata: config.creds.identityMetadata,
-    clientID: config.creds.clientID,
+    identityMetadata: localConfig.IDENTITYMETADATA,
+    clientID: localConfig.CLIENTID,
     responseType: config.creds.responseType,
     responseMode: config.creds.responseMode,
-    redirectUrl: config.creds.redirectUrl,
+    redirectUrl: localConfig.REDIRECTURL,
     allowHttpForRedirectUrl: config.creds.allowHttpForRedirectUrl,
-    clientSecret: config.creds.clientSecret,
+    clientSecret: localConfig.CLIENTSECRET,
     validateIssuer: config.creds.validateIssuer,
     isB2C: config.creds.isB2C,
     issuer: config.creds.issuer,
@@ -273,7 +285,7 @@ app.post('/auth/openid/return',
 app.get('/logout', function(req, res){
     req.session.destroy(function() {
         req.logOut();
-        res.redirect(config.destroySessionUrl);
+        res.redirect(localConfig.DESTROYSESSIONURL);
     });
 });
 
