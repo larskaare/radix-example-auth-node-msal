@@ -1,6 +1,18 @@
 {
   "name": "radix-example-auth-node-msal",
   "version": "0.0.1",
+  "description": "Radix Example Add - OIDC Auth",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/larskaare/radix-example-auth-node-msal.git"
+  },
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js | ./node_modules/bunyan/bin/bunyan",
+    "test": ""
+  },
+  "author": "Lars Kaare Skjorestad",
+  "license": "MIT",
   "dependencies": {
     "@microsoft/microsoft-graph-client": "^1.3.0",
     "assert-plus": "*",
