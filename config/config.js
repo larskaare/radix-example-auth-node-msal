@@ -1,6 +1,15 @@
+/*jslint node: true */
+/*jshint esversion: 6 */
+
+/**
+ */
+
+'use strict';
+
+
 exports.creds = {
     // Required
-    identityMetadata: 'https://login.microsoftonline.com/tenantid/v2.0/.well-known/openid-configuration', 
+    identityMetadata: 'https://login.microsoftonline.com/tenantid.onmicrosoft.com/v2.0/.well-known/openid-configuration', 
     // or you can use the common endpoint
     // 'https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration'
     // To use the common endpoint, you have to either turn `validateIssuer` off, or provide the `issuer` value.
@@ -11,7 +20,7 @@ exports.creds = {
     // Required, must be 'code', 'code id_token', 'id_token code' or 'id_token'
     // If you want to get access_token, you must use 'code', 'code id_token' or 'id_token code' 
     // responseType: 'code id_token', 
-    responseType: 'code', 
+    responseType: 'code id_token', 
 
 
     // why not id_token ??
@@ -57,11 +66,15 @@ exports.creds = {
     // (1) if you want to receive refresh_token, use 'offline_access' scope
     // (2) if you want to get access_token for graph api, use the graph api url like 'https://graph.microsoft.com/mail.read'
     //  scope: ['profile User.ReadBasic.All', 'offline_access', 'https://graph.microsoft.com/mail.read'],
-    scope: ['profile User.ReadBasic.All', 'offline_access'],
+    // scope: ['profile User.Read', 'offline_access','https://graph.microsoft.com/v1.0/me'],
+    scope: ['profile User.Read', 'offline_access'],
 
 
     // Optional, 'error', 'warn' or 'info'
-    loggingLevel: 'info',
+    loggingLevel: 'warn',
+
+    // Log private information - false = log PI, true = do not log
+    loggingNoPII: true,
 
     // Optional. The lifetime of nonce in session or cookie, the default value is 3600 (seconds).
     nonceLifetime: null,
