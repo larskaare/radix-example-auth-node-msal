@@ -14,16 +14,9 @@ To run this sample you will need the following:
 - Enter the correct **Redirect URI**. The redirect uri indicates to Azure AD where authentication responses should be directed - the default for this sample is `http://localhost:3000/auth/openid/return'`.
 - Add a new **Application secret** by clicking the **Generate new password** button. This value will not be displayed again, so save the result in a temporary location as you'll need it in the next step.
 
-## Run applicatiomn
-
-
-From the project root directory, run the command:
-
-* `$ npm install`   
-
-
 ## Configure the application
 
+### config.js
 Provide the parameters in `exports.creds` in config.js as instructed.
 
 * Update `<tenant_name>` in `exports.identityMetadata` with the Azure AD tenant name of the format \*.onmicrosoft.com.
@@ -31,19 +24,34 @@ Provide the parameters in `exports.creds` in config.js as instructed.
 * Update `exports.clientSecret` with the Application secret noted from app registration.
 * Update `exports.redirectUrl` with the Redirect URI noted from app registration.
 
+### Storing secrets outside code
+Secrets and private information must be kept outside version control. The application supports reading part of the configuration from environment variables (takes presendence over config.js)
+
+Example localconfig.env
+```
+export IDENTITYMETADATA=""
+export CLIENTID=""
+export REDIRECTURL=""
+export CLIENTSECRET=""
+export DESTROYSESSIONURL=""
+```
+Remember to escape special chars like $ in the environment varaibles (like secrets)
+
 **Optional configuration for production apps:**
 
 * Update `exports.destroySessionUrl` in config.js, if you want to use a different `post_logout_redirect_uri`.
 
-* Set `exports.useMongoDBSessionStore` in config.js to true, if you want to use use mongoDB or other [compatible session stores](https://github.com/expressjs/session#compatible-session-stores).
-The default session store in this sample is `express-session`. Note that the default session store is not suitable for production.
-
-* Update `exports.databaseUri`, if you want to use mongoDB session store and a different database URI.
-
-* Update `exports.mongoDBSessionMaxAge`. Here you can specify how long you want to keep a session in mongoDB. The unit is second(s).
-
 ## Build and run the application
 
+Remember to install dependencies before you run the application
+```
+$ npm install 
+```
+Source config (dependent on OS)
+```
+$ source localconfig.env
+```
+Running the application
 ```
 $ node app.js 
 ```

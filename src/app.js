@@ -1,7 +1,11 @@
+/*jslint node: true */
+/*jshint esversion: 6 */
+
 /**
  */
 
 'use strict';
+
 
 /******************************************************************************
  * Module dependencies.
@@ -19,7 +23,7 @@ var config = require('../config/config');
 var OIDCStrategy = require('passport-azure-ad').OIDCStrategy;
 
 var log = bunyan.createLogger({
-    name: 'Microsoft OIDC Example Web Application'
+    name: 'Radix Example - Authentication with OICD'
 });
 
 const MicrosoftGraph = require('@microsoft/microsoft-graph-client');
@@ -34,7 +38,6 @@ localConfig.CLIENTID = (process.env.CLIENTID || config.creds.clientID);
 localConfig.REDIRECTURL = (process.env.REDIRECTURL || config.creds.redirectUrl);
 localConfig.CLIENTSECRET = (process.env.CLIENTSECRET || config.creds.clientSecret);
 localConfig.DESTROYSESSIONURL = (process.env.DESTROYSESSIONURL || config.destroySessionUrl);
-
 
 /******************************************************************************
  * Set up passport in the app 
@@ -62,7 +65,7 @@ var users = [];
 var findByOid = function(oid, fn) {
     for (var i = 0, len = users.length; i < len; i++) {
         var user = users[i];
-        log.info('we are using user: ', user);
+        log.info('we are using user: ', user.sub);
         if (user.oid === oid) {
             return fn(null, user);
         }
@@ -101,6 +104,7 @@ passport.use(new OIDCStrategy({
     passReqToCallback: config.creds.passReqToCallback,
     scope: config.creds.scope,
     loggingLevel: config.creds.loggingLevel,
+    loggingNoPII: config.creds.loggingNoPII,
     nonceLifetime: config.creds.nonceLifetime,
     nonceMaxAmount: config.creds.nonceMaxAmount,
     useCookieInsteadOfSession: config.creds.useCookieInsteadOfSession,
@@ -108,9 +112,6 @@ passport.use(new OIDCStrategy({
     clockSkew: config.creds.clockSkew,
 },
 function(iss, sub, profile, accessToken, refreshToken, done) {
-    
-    console.log('Access token :', accessToken);
-    console.log('Refesh token :', refreshToken);
     
     // users.push(accessToken);
     profile.accessToken = accessToken;
@@ -142,7 +143,7 @@ function(iss, sub, profile, accessToken, refreshToken, done) {
 //-----------------------------------------------------------------------------
 var app = express();
 
-app.set('views', __dirname + '/views');
+app.set('views', __dirname + '/../views');
 app.set('view engine', 'ejs');
 app.use(express.logger());
 app.use(methodOverride());
@@ -221,7 +222,7 @@ app.get('/manager', ensureAuthenticated, function(req, res, next) {
 
 }, function(req, res) { 
  
-    console.log('Returning manager');  
+    // console.log('Returning manager');  
     res.status(200).send(JSON.stringify(req.user.manager.displayName));
      
 });
@@ -241,7 +242,6 @@ app.get('/login',
         )(req, res, next);
     },
     function(req, res) {
-        log.info('Login was called in the Sample');
         res.redirect('/');
     });
 
