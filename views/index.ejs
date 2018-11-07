@@ -1,9 +1,19 @@
-<% if (!user) { %>
-	<h2>Welcome! Please log in.</h2>
-	<a href="/login">Log In</a>
-<% } else { %>
-	<h2>Hello, <%= user.displayName %>.</h2>
-	<a href="/account">Account Info</a></br>
-	<a href="/logout">Log Out</a></br></br>
-	<a href="/manager">Manager</a>
-<% } %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+	<h1><%= title %></h1>
+	
+	<% if (!user) { %>
+		<h2>Be Welcome <%= userDisplayName %></h2>
+		<a href="/login">Log In</a>
+	<% } else { %>
+		<p>Welcome <%= userDisplayName %></p>
+		<p><a href="/me">O365 Graph information about you</a></p>
+		<p><a href="/logout">Log Out</a></p>
+	<% } %>
+  </body>
+</html>

@@ -1,8 +1,17 @@
+var express = require('express');
+var router = express.Router();
+var log = require('../bin/logger');
 
-/*
- * GET home page.
- */
+/* GET home page. */
+router.get('/', function(req, res, next) {
+  var userDisplayName;
 
-exports.index = function(req, res){
-    res.render('index', { title: 'Express' });
-};
+  if (!req.user) {
+      userDisplayName = '- "not logged in user"';
+  } else {
+      userDisplayName = req.user.displayName;
+  }
+  res.render('index', { title: 'Radix Example Application - Authentication', userDisplayName: userDisplayName, user: req.user});
+});
+
+module.exports = router;
