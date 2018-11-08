@@ -2,66 +2,80 @@
 /*jshint esversion: 6 */
 
 /**
+ * Routing module for '/me'
+ * 
+ * '/' - hit the o365 graph api and collect some information from the me and manager endpoints
+ * 
  */
 
 'use strict';
 var express = require('express');
 var router = express.Router();
-var log = require('../bin/logger');
-
+const MicrosoftGraph = require('@microsoft/microsoft-graph-client');
+var log = require('../src/logger');
+var authUtil = require('../src/authutil');
 
 /*
  * GET page for information about me object
  */
 
-router.get('/', function(req, res, next) {
-    res.render('me', { title: 'Me' });
+router.get('/', authUtil.ensureAuthenticated,  function(req, res, next) {
+ 
+    //Collecting information from the /me/manager endpoint
+    var client = MicrosoftGraph.Client.init({
+        authProvider: (done) => {
+            done(null, req.user.accessToken); //first parameter takes an error if you can't get an access token
+        }
+    });
+
+
+    client
+        .api('me/manager')
+        .get((err, res) => {
+            log.info('Collecting manager for user ' + req.user.sub);
+            req.user.manager = res;
+            next();     
+        });
+
+}, function(req,res,next) {
+
+    //Collecting information from the /me endpoint
+    var client = MicrosoftGraph.Client.init({
+        authProvider: (done) => {
+            done(null, req.user.accessToken); //first parameter takes an error if you can't get an access token
+        }
+    });
+
+    client
+        .api('me')
+        .get((err, res) => {
+            log.info('Collecting me for user ' + req.user.sub);
+            req.user.me = res;
+            next();     
+        });
+}, function(req, res) { 
+    var meObj={};
+
+    meObj.displayName = '';
+    meObj.jobTitle = '';
+    meObj.mail = '';
+    meObj.phone = '';
+    meObj.officeLocation = '';
+    meObj.manager = '';
+
+    if (req.user.me) {
+        meObj.displayName = req.user.me.displayName;
+        meObj.jobTitle = req.user.me.jobTitle;
+        meObj.mail = req.user.me.mail;
+        meObj.phone = req.user.me.mobilePhone;
+        meObj.officeLocation = req.user.me.officeLocation;
+    }
+
+    if (req.user.manager) {
+        meObj.manager = req.user.manager.displayName;
+    }
+
+    res.render('me', { title: 'O365 Graph information about you', me: meObj });
 });
-
-// '/account' is only available to logged in user
-// app.get('/me', ensureAuthenticated, function(req, res) {
- 
-//     res.render('me', { user: req.user });
-// });
-
-//
-//  more info
-//
-// app.get('/manager', ensureAuthenticated, function(req, res, next) {
-  
- 
-//     // console.log(users[0]);
-
-
-//     var client = MicrosoftGraph.Client.init({
-//         authProvider: (done) => {
-//             done(null, req.user.accessToken); //first parameter takes an error if you can't get an access token
-//         }
-//     });
-
-//     var manager;
-
-//     client
-//         .api('me/manager')
-//         .get((err, res) => {
-//         // console.log(res); // prints info about authenticated user
-        
-//             manager = res;
-//             console.log('Manager:' + JSON.stringify(manager));
-//             req.user.manager = manager;
-
-//             next();
-        
-//         });
-   
-
-// }, function(req, res) { 
- 
-//     // console.log('Returning manager');  
-//     res.status(200).send(JSON.stringify(req.user.manager.displayName));
-     
-// });
-
-
 
 module.exports = router;

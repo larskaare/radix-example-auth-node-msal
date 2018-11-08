@@ -2,6 +2,8 @@
 /*jshint esversion: 6 */
 
 /**
+ * Rigging web app middleware and handling most of the authentication logic
+ * 
  */
 
 'use strict';
@@ -17,14 +19,11 @@ var favicon = require('serve-favicon');
 var cookieParser = require('cookie-parser');
 var expressSession = require('express-session');
 var passport = require('passport');
-var logger = require('morgan');
 var config = require('../config/config');
 var OIDCStrategy = require('passport-azure-ad').OIDCStrategy;
-var log = require('../bin/logger');
+var log = require('../src/logger');
 
-const MicrosoftGraph = require('@microsoft/microsoft-graph-client');
-
-// Reading vital condif from environment variables
+// Reading vital config from environment variables
 //
 const localConfig={};
 
@@ -150,8 +149,9 @@ app.use(require('express-bunyan-logger')({
     streams: [{
         level: config.creds.loggingLevel,
         stream: process.stdout
-        }]
-    }));
+    }]
+}));
+
 // app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -232,10 +232,10 @@ app.get('/logout', function(req, res){
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     next(createError(404));
-  });
+});
   
-  // error handler
-  app.use(function(err, req, res, next) {
+// error handler
+app.use(function(err, req, res) {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -243,6 +243,6 @@ app.use(function(req, res, next) {
     // render the error page
     res.status(err.status || 500);
     res.render('error');
-  });
+});
   
-  module.exports = app;
+module.exports = app;

@@ -9,7 +9,7 @@
             "type": "node",
             "request": "launch",
             "name": "Run debugger locally",
-            "program": "${workspaceFolder}/bin/www",
+            "program": "${workspaceFolder}/bin/www.js",
             "envFile": "${workspaceFolder}/localvars.env"
             
         }

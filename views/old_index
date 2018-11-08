@@ -1,9 +1,0 @@
-<% if (!user) { %>
-	<h2>Be Welcome! Please log in.</h2>
-	<a href="/login">Log In</a>
-<% } else { %>
-	<h2>Greetings, <%= user.displayName %>.</h2>
-	<a href="/me">O365 Graph Information about you</a></br>
-</p>
-	<a href="/logout">Log Out</a></br>
-<% } %>

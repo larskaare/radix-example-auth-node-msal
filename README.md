@@ -25,7 +25,7 @@ Provide the parameters in `exports.creds` in config.js as instructed.
 * Update `exports.redirectUrl` with the Redirect URI noted from app registration.
 
 ### Storing secrets outside code
-Secrets and private information must be kept outside version control. The application supports reading part of the configuration from environment variables (takes presendence over config.js)
+Secrets and private information must be kept outside version control. The application supports reading part of the configuration from environment variables (takes precedence over config.js)
 
 Example localconfig.env
 ```
@@ -35,7 +35,7 @@ export REDIRECTURL=""
 export CLIENTSECRET=""
 export DESTROYSESSIONURL=""
 ```
-Remember to escape special chars like $ in the environment varaibles (like secrets)
+Remember to escape special chars like $ in the environment variables (like secrets)
 
 **Optional configuration for production apps:**
 
@@ -53,11 +53,11 @@ $ source localconfig.env
 ```
 Running the application
 ```
-$ node app.js 
+$ npm start
 ```
-or if you have installed bunyan with `npm install -g bunyan`
+and to get formatted logs, install bunyan with `npm install -g bunyan`
 ```
-$ node app.js | bunyan
+$ npm start | bunyan
 ```
 
 ### Acknowledgements
