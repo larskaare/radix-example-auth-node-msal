@@ -4,6 +4,7 @@ npm-debug.log
 logs
 *.log
 *.env
+*.sh
 
 ### OSX ###
 .DS_STORE
