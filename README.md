@@ -1,5 +1,22 @@
 # Omnia Radix Auth Example (OIDC)
 
+Table of contents
+<!-- TOC -->
+
+- [Omnia Radix Auth Example (OIDC)](#omnia-radix-auth-example-oidc)
+    - [Prerequisites](#prerequisites)
+    - [Register application in AD](#register-application-in-ad)
+    - [Configure the application](#configure-the-application)
+        - [config.js](#configjs)
+        - [Storing secrets outside code](#storing-secrets-outside-code)
+    - [Build and run the application](#build-and-run-the-application)
+    - [Docerizing the application](#docerizing-the-application)
+        - [Building docker image for the application](#building-docker-image-for-the-application)
+        - [Running the application in docker](#running-the-application-in-docker)
+    - [Acknowledgements](#acknowledgements)
+
+<!-- /TOC -->
+
 ## Prerequisites
 
 To run this sample you will need the following:
@@ -9,10 +26,13 @@ To run this sample you will need the following:
 
 ## Register application in AD
 
-- Copy down the **Application Id** assigned to your app, you'll need it soon.
-- Add the **Web** platform for your app.
-- Enter the correct **Redirect URI**. The redirect uri indicates to Azure AD where authentication responses should be directed - the default for this sample is `http://localhost:3000/auth/openid/return'`.
-- Add a new **Application secret** by clicking the **Generate new password** button. This value will not be displayed again, so save the result in a temporary location as you'll need it in the next step.
+Create an application in your Azure tenant using [App registrations](https://aka.ms/registeredappsprod). Give the application a cool name, select account type (I selected "account in this organization directory only"). You can leave the "redirect URI" open. A few settings that you will have to define:
+
+* `Authentication:Redirect URI` -> The url where authentication requests are returned. We use `http://localhost:3000/auth/openid/return` in the example when running the code on localhost. If the app is deployed else where, this should be updated in both Azure and in the app config.
+* `Advanced setting:Implicit grant` -> Select `ID Tokens`
+* `Certificates:Client secrets` > Create a secret for your application. Keep it out of source code!
+* Make a note of **Application Id** assigned to your app, you'll need it soon.
+* Make a note of the **Tenant id** as well. That will also become handy quite soon.
 
 ## Configure the application
 
