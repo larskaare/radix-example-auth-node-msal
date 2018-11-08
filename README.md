@@ -25,6 +25,7 @@ Provide the parameters in `exports.creds` in config.js as instructed.
 * Update `exports.redirectUrl` with the Redirect URI noted from app registration.
 
 ### Storing secrets outside code
+
 Secrets and private information must be kept outside version control. The application supports reading part of the configuration from environment variables (takes precedence over config.js)
 
 Example localconfig.env
@@ -44,23 +45,47 @@ Remember to escape special chars like $ in the environment variables (like secre
 ## Build and run the application
 
 Remember to install dependencies before you run the application
-```
+
+```node
 $ npm install 
 ```
+
 Source config (dependent on OS)
-```
+
+```node
 $ source localconfig.env
 ```
+
 Running the application
-```
+
+```node
 $ npm start
 ```
-and to get formatted logs, install bunyan with `npm install -g bunyan`
-```
-$ npm start | bunyan
+
+## Docerizing the application
+
+### Building docker image for the application
+
+```docker
+docker build -t <imagename> .
 ```
 
-### Acknowledgements
+### Running the application in docker
+A few considerations
+
+* The application exposes things on port 3000. Use the -p to change if necessary
+* The application need the needs a few environment variables to function properly. Check the section on [storing secrets outside code](storing-secrets-outside-code).
+
+```docker
+docker run -p 3000:3000  \
+    --env IDENTITYMETADATA=<> \
+    --env CLIENTID=<> \
+    --env REDIRECTURL=<> \
+    --env CLIENTSECRET=<> \
+    --enc DESTROYSESSIONURL=<> \
+    <imagename>
+```
+
+## Acknowledgements
 
 Based on the example [AppModelv2-WebApp-OpenIDConnect-nodejs](https://github.com/AzureADQuickStarts/AppModelv2-WebApp-OpenIDConnect-nodejs)
-

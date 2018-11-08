@@ -2,12 +2,14 @@
 # -- Base node image with app
 #
 FROM node:10-alpine AS base
-RUN mkdir -p /usr/src/app/{src,config,routes,views}
+RUN mkdir -p /usr/src/app/{bin,config,public,routes,src,views}
 WORKDIR /usr/src/app
 COPY package.json package-lock.json ./
-COPY src src
+COPY bin bin
 COPY config config
+COPY public public
 COPY routes routes
+COPY src src
 COPY views views
 
 #
@@ -20,7 +22,7 @@ RUN cp -R node_modules node_modules_production
 RUN npm install
 
 #
-# Running test 
+# Running test, does linting and npm audit 
 #
 FROM dependencies as test
 WORKDIR /usr/src/app
@@ -29,13 +31,13 @@ WORKDIR /usr/src/app
 # RUN ["npm","test"]
 COPY .eslintrc.js .eslintignore ./
 RUN npm run lint
+RUN npm audit
 
 #
 # Release image
 #
 FROM base as release
 WORKDIR /usr/src/app
-# COPY src src
 COPY --from=dependencies /usr/src/app/node_modules_production ./node_modules
 EXPOSE 3000
-CMD [ "npm", "start" ]
+CMD [ "npm", "start"]
