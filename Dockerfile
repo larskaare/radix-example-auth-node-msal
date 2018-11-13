@@ -3,8 +3,8 @@
 #
 FROM node:10-alpine AS base
 WORKDIR /usr/src/app
-RUN mkdir -p ./bin ./config ./public ./routes ./src ./views
 COPY package.json package-lock.json ./
+RUN mkdir -p ./bin ./config ./public ./routes ./src ./views
 COPY bin bin
 COPY config config
 COPY public public
