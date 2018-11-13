@@ -11,6 +11,7 @@ COPY public public
 COPY routes routes
 COPY src src
 COPY views views
+RUN ls -la
 
 #
 # -- Dependencies
