@@ -11,14 +11,14 @@ COPY public public
 COPY routes routes
 COPY src src
 COPY views views
-#RUN ls -la
+RUN ls -la
 
 #
 # -- Dependencies
 #
 FROM base as dependencies
 WORKDIR /usr/src/app
-RUN ls -la
+#RUN ls -la
 RUN npm install --only=production
 RUN cp -R node_modules node_modules_production
 #RUN npm install
