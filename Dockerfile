@@ -11,7 +11,7 @@ COPY public public
 COPY routes routes
 COPY src src
 COPY views views
-RUN ls -la
+#RUN ls -la
 
 #
 # -- Dependencies
@@ -21,7 +21,7 @@ WORKDIR /usr/src/app
 RUN ls -la
 RUN npm install --only=production
 RUN cp -R node_modules node_modules_production
-RUN npm install
+#RUN npm install
 
 #
 # Running test, does linting and npm audit 
