@@ -17,6 +17,7 @@ COPY views views
 #
 FROM base as dependencies
 WORKDIR /usr/src/app
+RUN ls -la
 RUN npm install --only=production
 RUN cp -R node_modules node_modules_production
 RUN npm install
