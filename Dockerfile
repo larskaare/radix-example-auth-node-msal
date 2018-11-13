@@ -2,8 +2,8 @@
 # -- Base node image with app
 #
 FROM node:10-alpine AS base
-RUN mkdir -p /usr/src/app/{bin,config,public,routes,src,views}
 WORKDIR /usr/src/app
+RUN mkdir -p ./bin ./config ./public ./routes ./src ./views
 COPY package.json package-lock.json ./
 COPY bin bin
 COPY config config
@@ -11,6 +11,7 @@ COPY public public
 COPY routes routes
 COPY src src
 COPY views views
+RUN ls -la
 
 #
 # -- Dependencies
