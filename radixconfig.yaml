@@ -1,0 +1,26 @@
+apiVersion: radix.equinor.com/v1
+kind: RadixApplication
+metadata:
+  name: radix-auth-example
+spec:
+  environments:
+    - name: production
+      build:
+        from: master
+  components:
+    - name: SinglePageApp
+      src: .
+      ports:
+       - name: http
+         port: 3000
+      public: true
+      replicas: 2
+      environmentVariables:
+        - environment: production
+          variables:
+            IDENTITYMETADATA: "https://login.microsoftonline.com/3aa4a235-b6e2-48d5-9195-7fcf05b459b0/v2.0/.well-known/openid-configuration"
+            CLIENTID: "b4a5aab6-6eb4-4be0-a978-cd0870f36963"
+            REDIRECTURL: "radix-auth-example-production.playground-master-45.dev.radix.equinor.com/auth/openid/return"
+            DESTROYSESSIONURL: "https://login.microsoftonline.com/common/oauth2/logout?post_logout_redirect_uri=http://radix-auth-example-production.playground-master-45.dev.radix.equinor.com"
+      secrets:
+        - CLIENTSECRET
