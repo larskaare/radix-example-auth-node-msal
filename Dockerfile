@@ -24,13 +24,12 @@ RUN cp -R node_modules node_modules_production
 RUN npm install
 
 #
-# Running test, does linting and npm audit 
+# Running test, linting and npm audit
 #
 FROM dependencies as test
 WORKDIR /usr/src/app
-# COPY test test
-# COPY src src
-# RUN ["npm","test"]
+COPY test test
+RUN ["npm","test"]
 COPY .eslintrc.js .eslintignore ./
 RUN npm run lint
 RUN npm audit
