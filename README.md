@@ -2,21 +2,7 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/larskaare/radix-example-auth-node-msal/badge.svg?targetFile=package.json)](https://snyk.io/test/github/larskaare/radix-example-auth-node-msal?targetFile=package.json)
 
 Table of contents
-<!-- TOC -->
-
-- [Omnia Radix Auth Example (OIDC)](#omnia-radix-auth-example-oidc)
-    - [Prerequisites](#prerequisites)
-    - [Register application in AD](#register-application-in-ad)
-    - [Configure the application](#configure-the-application)
-        - [config.js](#configjs)
-        - [Storing secrets outside code](#storing-secrets-outside-code)
-    - [Build and run the application](#build-and-run-the-application)
-    - [Docerizing the application](#docerizing-the-application)
-        - [Building docker image for the application](#building-docker-image-for-the-application)
-        - [Running the application in docker](#running-the-application-in-docker)
-    - [Acknowledgements](#acknowledgements)
-
-<!-- /TOC -->
+<!-- TOC -->autoauto- [Omnia Radix Auth Example (OIDC)](#omnia-radix-auth-example-oidc)auto    - [Prerequisites](#prerequisites)auto    - [Register application in AD](#register-application-in-ad)auto    - [Configure the application](#configure-the-application)auto        - [config.js](#configjs)auto        - [Storing secrets outside code](#storing-secrets-outside-code)auto    - [Build, test and run the application](#build-test-and-run-the-application)auto    - [Docerizing the application](#docerizing-the-application)auto        - [Building docker image for the application](#building-docker-image-for-the-application)auto        - [Running the application in docker](#running-the-application-in-docker)auto    - [Acknowledgements](#acknowledgements)autoauto<!-- /TOC -->
 
 ## Prerequisites
 
@@ -63,7 +49,7 @@ Remember to escape special chars like $ in the environment variables (like secre
 
 * Update `exports.destroySessionUrl` in config.js, if you want to use a different `post_logout_redirect_uri`.
 
-## Build and run the application
+## Build, test and run the application
 
 Remember to install dependencies before you run the application
 
@@ -76,6 +62,19 @@ Source config (dependent on OS)
 ```node
 $ source localconfig.env
 ```
+
+Linting the application
+
+```node
+$ npm run lint
+```
+
+Testing the application
+
+```node
+$ npm test
+```
+
 
 Running the application
 

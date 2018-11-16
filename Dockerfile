@@ -28,9 +28,8 @@ RUN npm install
 #
 FROM dependencies as test
 WORKDIR /usr/src/app
-# COPY test test
-# COPY src src
-# RUN ["npm","test"]
+COPY test test
+RUN ["npm","test"]
 COPY .eslintrc.js .eslintignore ./
 RUN npm run lint
 RUN npm audit
