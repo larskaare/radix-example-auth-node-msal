@@ -7,16 +7,13 @@ spec:
     - name: production
       build:
         from: master
-    - name: issue21
-      build:
-        from: issue21
   components:
     - name: singlepageapp
       src: .
       ports:
        - name: http
          port: 3000
-      public: true
+      public: false
       replicas: 1
       environmentVariables:
         - environment: production
@@ -25,11 +22,5 @@ spec:
             CLIENTID: "b4a5aab6-6eb4-4be0-a978-cd0870f36963"
             REDIRECTURL: "https://singlepageapp-radix-auth-example-production.playground-master-45.dev.radix.equinor.com/auth/openid/return"
             DESTROYSESSIONURL: "https://login.microsoftonline.com/common/oauth2/logout?post_logout_redirect_uri=https://singlepageapp-radix-auth-example-production.playground-master-45.dev.radix.equinor.com/"
-        - environment: issue21
-          variables:
-            IDENTITYMETADATA: "https://login.microsoftonline.com/3aa4a235-b6e2-48d5-9195-7fcf05b459b0/v2.0/.well-known/openid-configuration"
-            CLIENTID: "b4a5aab6-6eb4-4be0-a978-cd0870f36963"
-            REDIRECTURL: "https://singlepageapp-radix-auth-example-issue21.playground-master-45.dev.radix.equinor.com/auth/openid/return"
-            DESTROYSESSIONURL: "https://login.microsoftonline.com/common/oauth2/logout?post_logout_redirect_uri=https://singlepageapp-radix-auth-example-issue21.playground-master-45.dev.radix.equinor.com/"
       secrets:
         - CLIENTSECRET
