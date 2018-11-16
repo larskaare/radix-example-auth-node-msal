@@ -9,7 +9,7 @@ spec:
         from: master
     - name: issue21
       build:
-        from: "issue#21"
+        from: issue21
   components:
     - name: singlepageapp
       src: .
