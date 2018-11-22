@@ -13,7 +13,7 @@ spec:
       ports:
        - name: http
          port: 3000
-      public: false
+      public: true
       replicas: 1
       environmentVariables:
         - environment: production
