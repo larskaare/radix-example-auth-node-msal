@@ -78,9 +78,7 @@ describe('Testing security headers', function () {
     it('GET / header should contain content-security-policy"', function (done) {
         request(app)
             .get('/')
-            .expect(function(res){
-                console.log(res.header);
-                expect(res.header).to.have.property('content-security-policy');})
+            .expect(function(res){expect(res.header).to.have.property('content-security-policy');})
             .end(function (err) {
                 if (err)
                     return done(err);
@@ -91,9 +89,7 @@ describe('Testing security headers', function () {
     it('GET / header should contain referrer-policy"', function (done) {
         request(app)
             .get('/')
-            .expect(function(res){
-                console.log(res.header);
-                expect(res.header).to.have.property('referrer-policy');})
+            .expect(function(res){expect(res.header).to.have.property('referrer-policy');})
             .end(function (err) {
                 if (err)
                     return done(err);
@@ -104,9 +100,7 @@ describe('Testing security headers', function () {
     it('GET / header should contain feature-policy"', function (done) {
         request(app)
             .get('/')
-            .expect(function(res){
-                console.log(res.header);
-                expect(res.header).to.have.property('feature-policy');})
+            .expect(function(res){expect(res.header).to.have.property('feature-policy');})
             .end(function (err) {
                 if (err)
                     return done(err);
