@@ -19,6 +19,7 @@ var favicon = require('serve-favicon');
 var cookieParser = require('cookie-parser');
 var expressSession = require('express-session');
 var passport = require('passport');
+var helmet = require('helmet');
 var config = require('../config/config');
 var OIDCStrategy = require('passport-azure-ad').OIDCStrategy;
 var log = require('../src/logger');
@@ -144,6 +145,7 @@ var app = express();
 app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'ejs');
 
+//Defining logger
 app.use(require('express-bunyan-logger')({
     name: 'logger',
     streams: [{
@@ -154,6 +156,10 @@ app.use(require('express-bunyan-logger')({
 
 // app.use(logger('dev'));
 app.use(express.json());
+
+//Defining security headers
+app.use(helmet());
+
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(expressSession({ secret: 'keyboard cat', resave: true, saveUninitialized: false }));
