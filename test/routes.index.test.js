@@ -5,6 +5,7 @@
 'use strict';
 
 var request = require('supertest');
+var expect = require('chai').expect;
 
 // start app server here 
 var app = require('../src/app');
@@ -44,9 +45,7 @@ describe('Testing security headers', function () {
     it('GET / header should not contain x-powered-by', function (done) {
         request(app)
             .get('/')
-            .expect(function(res){
-                if ('x-powered-by' in res.header) return false;
-            })
+            .expect(function(res){expect(res.header).not.to.have.property('x-powered-by');})
             .end(function (err) {
                 if (err)
                     return done(err);
@@ -57,7 +56,7 @@ describe('Testing security headers', function () {
     it('GET / header should contain x-frame-options"', function (done) {
         request(app)
             .get('/')
-            .expect(function(res){if ('x-frame-options' in res.header) return false;})
+            .expect(function(res){expect(res.header).to.have.property('x-frame-options');})
             .end(function (err) {
                 if (err)
                     return done(err);
@@ -68,7 +67,7 @@ describe('Testing security headers', function () {
     it('GET / header should contain strict-transport-security"', function (done) {
         request(app)
             .get('/')
-            .expect(function(res){if ('strict-transport-security' in res.header) return false;})
+            .expect(function(res){expect(res.header).to.have.property('strict-transport-security');})
             .end(function (err) {
                 if (err)
                     return done(err);
@@ -76,5 +75,43 @@ describe('Testing security headers', function () {
             });
     });
     
+    it('GET / header should contain content-security-policy"', function (done) {
+        request(app)
+            .get('/')
+            .expect(function(res){
+                console.log(res.header);
+                expect(res.header).to.have.property('content-security-policy');})
+            .end(function (err) {
+                if (err)
+                    return done(err);
+                done();
+            });
+    });
+
+    it('GET / header should contain referrer-policy"', function (done) {
+        request(app)
+            .get('/')
+            .expect(function(res){
+                console.log(res.header);
+                expect(res.header).to.have.property('referrer-policy');})
+            .end(function (err) {
+                if (err)
+                    return done(err);
+                done();
+            });
+    });
+
+    it('GET / header should contain feature-policy"', function (done) {
+        request(app)
+            .get('/')
+            .expect(function(res){
+                console.log(res.header);
+                expect(res.header).to.have.property('feature-policy');})
+            .end(function (err) {
+                if (err)
+                    return done(err);
+                done();
+            });
+    });
 
 });

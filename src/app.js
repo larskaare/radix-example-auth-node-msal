@@ -159,6 +159,23 @@ app.use(express.json());
 
 //Defining security headers
 app.use(helmet());
+app.use(helmet.contentSecurityPolicy({
+    directives: {
+        defaultSrc: ['\'self\''],
+        styleSrc: ['\'self\'']
+    }   
+}));
+app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
+app.use(helmet.featurePolicy({
+    features: {
+        fullscreen: ['\'self\''],
+        autoplay: ['\'none\''],
+        payment: ['\'none\''],
+        syncXhr: ['\'none\''],
+        geolocation: ['\'self\''],
+        camera: ['\'none\'']
+    }
+}));
 
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
