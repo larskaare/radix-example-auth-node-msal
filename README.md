@@ -1,13 +1,13 @@
  <!-- markdownlint-disable MD014 MD007-->
 
-# 1. Omnia Radix Auth Example (OIDC)
+# 1. Omnia Radix Auth Example (OIDC).
 
 [![Known Vulnerabilities](https://snyk.io/test/github/larskaare/radix-example-auth-node-msal/badge.svg?targetFile=package.json)](https://snyk.io/test/github/larskaare/radix-example-auth-node-msal?targetFile=package.json)
 
 Table of contents:
 <!-- TOC -->
 
-- [1. Omnia Radix Auth Example (OIDC)](#1-omnia-radix-auth-example-oidc)
+- [1. Omnia Radix Auth Example (OIDC).](#1-omnia-radix-auth-example-oidc)
     - [1.1. Prerequisites](#11-prerequisites)
     - [1.2. Register application in AD](#12-register-application-in-ad)
     - [1.3. Configure the application](#13-configure-the-application)
