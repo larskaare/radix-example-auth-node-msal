@@ -41,4 +41,4 @@ FROM base as release
 WORKDIR /usr/src/app
 COPY --from=dependencies /usr/src/app/node_modules_production ./node_modules
 EXPOSE 3000
-CMD [ "npm", "start"]
+ENTRYPOINT [ "npm", "start"]
