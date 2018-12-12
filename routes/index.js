@@ -9,6 +9,7 @@
 'use strict';
 var express = require('express');
 var router = express.Router();
+var log = require('../src/logger');
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -19,7 +20,7 @@ router.get('/', function(req, res) {
     } else {
         userDisplayName = req.user.displayName;
     }
-    
+    log.info('Rendring index page');
     res.render('index', { title: 'Radix Example Application - Authentication', userDisplayName: userDisplayName, user: req.user});
 
 });
