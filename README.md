@@ -14,6 +14,7 @@ Table of contents:
         - [1.3.1. config.js](#131-configjs)
         - [1.3.2. Storing secrets outside code](#132-storing-secrets-outside-code)
     - [1.4. Build, test and run the application](#14-build-test-and-run-the-application)
+        - [1.4.1. Using Grunt to run tasks](#141-using-grunt-to-run-tasks)
     - [1.5. Docerizing the application](#15-docerizing-the-application)
         - [1.5.1. Building docker image for the application](#151-building-docker-image-for-the-application)
         - [1.5.2. Running the application in docker](#152-running-the-application-in-docker)
@@ -101,6 +102,22 @@ Running the application
 ```node
 $ npm start
 ```
+
+### 1.4.1. Using Grunt to run tasks
+
+Grunt is of several tasks runners available in the Node eco-system. To use Grunt please install the cli.
+
+```node
+npm install -g grunt-cli
+```
+
+Using grunt to watch for changes and then run linting and tests
+
+```node
+$ grunt
+```
+
+Examine the ```Grunfile.js``` for other tasks that can be executed using Grunt. 
 
 ## 1.5. Docerizing the application
 

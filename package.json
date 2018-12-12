@@ -33,6 +33,11 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "eslint": "^5.8.0",
+    "grunt": "^1.0.3",
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-eslint": "^21.0.0",
+    "grunt-mocha-cli": "^4.0.0",
+    "grunt-run": "^0.8.1",
     "mocha": "^5.2.0",
     "supertest": "^3.3.0"
   }
