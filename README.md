@@ -25,7 +25,7 @@ Table of contents:
 
 ## 1.1. Prerequisites
 
-To run this sample you will need the following:
+To run this sample you will need the following::
 
 - A O365 account
 - Access to Azure tenant to register application
