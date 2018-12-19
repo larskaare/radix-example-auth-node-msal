@@ -23,9 +23,13 @@ var helmet = require('helmet');
 var config = require('../config/config');
 var OIDCStrategy = require('passport-azure-ad').OIDCStrategy;
 var log = require('../src/logger');
+var apputils = require('../src/apputils');
 
 // Reading vital config from environment variables
 //
+
+var port = apputils.normalizePort(process.env.PORT || '3000');
+
 const localConfig={};
 
 localConfig.IDENTITYMETADATA = (process.env.IDENTITYMETADATA || config.creds.identityMetadata);
@@ -33,6 +37,7 @@ localConfig.CLIENTID = (process.env.CLIENTID || config.creds.clientID);
 localConfig.REDIRECTURL = (process.env.REDIRECTURL || config.creds.redirectUrl);
 localConfig.CLIENTSECRET = (process.env.CLIENTSECRET || config.creds.clientSecret);
 localConfig.DESTROYSESSIONURL = (process.env.DESTROYSESSIONURL || config.destroySessionUrl);
+
 
 /******************************************************************************
  * Set up passport in the app 
@@ -141,6 +146,8 @@ var indexRouter = require('../routes/index');
 var meRouter = require('../routes/me');
 
 var app = express();
+
+app.set('port', port);
 
 app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'ejs');
