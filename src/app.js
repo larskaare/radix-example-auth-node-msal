@@ -50,9 +50,18 @@ const localConfig={};
 
 localConfig.IDENTITYMETADATA = (process.env.IDENTITYMETADATA || config.creds.identityMetadata);
 localConfig.CLIENTID = (process.env.CLIENTID || config.creds.clientID);
-localConfig.REDIRECTURL = hostUrlWithPort + (process.env.REDIRECTURL || config.creds.redirectUrl);
 localConfig.CLIENTSECRET = (process.env.CLIENTSECRET || config.creds.clientSecret);
-localConfig.DESTROYSESSIONURL = hostUrlWithPort + (process.env.DESTROYSESSIONURL || config.destroySessionUrl);
+
+//If we are running in the cloud we do not, usually, specify port as it's 80
+if (hostDomainName !== 'localhost') {
+    localConfig.REDIRECTURL = hostUrl + (process.env.REDIRECTURL || config.creds.redirectUrl);
+    localConfig.DESTROYSESSIONURL = hostUrl + (process.env.DESTROYSESSIONURL || config.destroySessionUrl);
+
+} else {
+    localConfig.REDIRECTURL = hostUrlWithPort + (process.env.REDIRECTURL || config.creds.redirectUrl);
+    localConfig.DESTROYSESSIONURL = hostUrlWithPort + (process.env.DESTROYSESSIONURL || config.destroySessionUrl);
+}
+
 
 /******************************************************************************
  * Set up passport in the app 
