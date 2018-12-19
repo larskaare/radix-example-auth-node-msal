@@ -55,11 +55,11 @@ localConfig.CLIENTSECRET = (process.env.CLIENTSECRET || config.creds.clientSecre
 //If we are running in the cloud we do not, usually, specify port as it's 80
 if (hostDomainName !== 'localhost') {
     localConfig.REDIRECTURL = hostUrl + (process.env.REDIRECTURL || config.creds.redirectUrl);
-    localConfig.DESTROYSESSIONURL = hostUrl + (process.env.DESTROYSESSIONURL || config.destroySessionUrl);
+    localConfig.DESTROYSESSIONURL = (process.env.DESTROYSESSIONURL || config.destroySessionUrl) + hostUrl;
 
 } else {
     localConfig.REDIRECTURL = hostUrlWithPort + (process.env.REDIRECTURL || config.creds.redirectUrl);
-    localConfig.DESTROYSESSIONURL = hostUrlWithPort + (process.env.DESTROYSESSIONURL || config.destroySessionUrl);
+    localConfig.DESTROYSESSIONURL =  (process.env.DESTROYSESSIONURL || config.destroySessionUrl) + hostUrlWithPort;
 }
 
 
