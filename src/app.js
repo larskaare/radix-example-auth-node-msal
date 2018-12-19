@@ -25,19 +25,34 @@ var OIDCStrategy = require('passport-azure-ad').OIDCStrategy;
 var log = require('../src/logger');
 var apputils = require('../src/apputils');
 
-// Reading vital config from environment variables
-//
 
+// Getting and normalising port for server
 var port = apputils.normalizePort(process.env.PORT || '3000');
 
+// Determing the url of the server. Using Radix env. varibles
+var hostDomainName = (process.env.RADIX_PUBLIC_DOMAIN_NAME || 'localhost');
+var hostUrl = '';
+var hostUrlWithPort = '';
+
+if (hostDomainName !== 'localhost') {
+    hostUrl = 'https://' + hostDomainName;
+} else {
+    hostUrl = 'http://' + hostDomainName;
+}
+
+hostUrlWithPort = hostUrl + ':' + port;
+
+log.info('Setting host url to ', hostUrl);
+
+// Reading vital config from environment variables
+//
 const localConfig={};
 
 localConfig.IDENTITYMETADATA = (process.env.IDENTITYMETADATA || config.creds.identityMetadata);
 localConfig.CLIENTID = (process.env.CLIENTID || config.creds.clientID);
-localConfig.REDIRECTURL = (process.env.REDIRECTURL || config.creds.redirectUrl);
+localConfig.REDIRECTURL = hostUrlWithPort + (process.env.REDIRECTURL || config.creds.redirectUrl);
 localConfig.CLIENTSECRET = (process.env.CLIENTSECRET || config.creds.clientSecret);
-localConfig.DESTROYSESSIONURL = (process.env.DESTROYSESSIONURL || config.destroySessionUrl);
-
+localConfig.DESTROYSESSIONURL = hostUrlWithPort + (process.env.DESTROYSESSIONURL || config.destroySessionUrl);
 
 /******************************************************************************
  * Set up passport in the app 
@@ -212,7 +227,7 @@ app.get('/login',
         )(req, res, next);
     },
     function(req, res) {
-        res.redirect('http://localhost:3000');
+        res.redirect(hostUrlWithPort);
     });
 
 // 'GET returnURL'
