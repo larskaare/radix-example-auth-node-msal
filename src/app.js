@@ -62,7 +62,6 @@ if (hostDomainName !== 'localhost') {
     localConfig.DESTROYSESSIONURL =  (process.env.DESTROYSESSIONURL || config.destroySessionUrl) + hostUrlWithPort;
 }
 
-
 /******************************************************************************
  * Set up passport in the app 
  ******************************************************************************/
@@ -225,7 +224,7 @@ app.use('/me', meRouter);
 
 app.get('/login',
     function(req, res, next) {
-        // log.info('Login page requested');
+        log.info('Login page requested');
         passport.authenticate('azuread-openidconnect', 
             { 
                 response: res,                      // required
