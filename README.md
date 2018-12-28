@@ -19,7 +19,8 @@ Table of contents:
         - [1.5.1. Building docker image for the application](#151-building-docker-image-for-the-application)
         - [1.5.2. Running the application in docker](#152-running-the-application-in-docker)
     - [1.6. Deploying to Omnia Radix](#16-deploying-to-omnia-radix)
-    - [1.7. Acknowledgements](#17-acknowledgements)
+    - [1.7. Logging to Logz.io](#17-logging-to-logzio)
+    - [1.8. Acknowledgements](#18-acknowledgements)
 
 <!-- /TOC -->
 
@@ -154,6 +155,15 @@ A few important remarks may be in order:
 - When authenticating with Azure AD, remember to define the proper ```redirect url's``` both in the components environment variables as well as in the Azure AD App registration.
 - Radix uses ```AD groups``` to govern access to developing your application. At the time of writing you'll need the guid for these, not the name.
 
-## 1.7. Acknowledgements
+## 1.7. Logging to Logz.io
+
+Logging to an external provider is added as an example. Logz.io has been tested. To enable the logging to [Logz.oi](https://www.logz.io) please do the following:
+
+* Set the ```logzio``` key to ```true``` in the config file [config.js](config.js)
+* Alternatively you can define the environment variable ```LOGZIO``` and give it the string value ```"true"```.
+* Store the token you have gotten from Logz.io in an environment variable named ```LOGZTOKEN```. This has to be reflected in your runtime environment - such as Docker.
+
+
+## 1.8. Acknowledgements
 
 Based on the example [AppModelv2-WebApp-OpenIDConnect-nodejs](https://github.com/AzureADQuickStarts/AppModelv2-WebApp-OpenIDConnect-nodejs)

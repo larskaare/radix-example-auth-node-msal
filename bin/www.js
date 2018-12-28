@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-var log = require('../src/logger');
+var log = require('../src/logger').logger;
 var app = require('../src/app');
 var debug = require('debug')('e1:server');
 var http = require('http');
@@ -49,11 +49,11 @@ function onError(error) {
     // handle specific listen errors with friendly messages
     switch (error.code) {
     case 'EACCES':
-        console.error(bind + ' requires elevated privileges');
+        log.error(bind + ' requires elevated privileges');
         process.exit(1);
         break;
     case 'EADDRINUSE':
-        console.error(bind + ' is already in use');
+        log.error(bind + ' is already in use');
         process.exit(1);
         break;
     default:
@@ -71,5 +71,5 @@ function onListening() {
         ? 'pipe ' + addr
         : 'port ' + addr.port;
     debug('Listening on ' + bind);
-    log.info('Server listening on port ',addr.port);
+    log.info('Server listening on port ' + addr.port);
 }

@@ -12,8 +12,14 @@ module.exports = function(grunt) {
             ]
         },
         watch: {
-            files: ['<%= eslint.target %>'],
-            tasks: ['eslint','test']
+            test: {
+                files: ['<%= eslint.target %>'],
+                tasks: ['eslint','test']
+            },
+            watch: {
+                files: ['<%= eslint.target %>'],
+                tasks: ['eslint']
+            }
         },
         mochacli: {
             options: {
@@ -47,6 +53,6 @@ module.exports = function(grunt) {
     grunt.registerTask('test',['mochacli']);
     grunt.registerTask('audit',['run:audit']);
     grunt.registerTask('docker',['run:docker']);
-    grunt.registerTask('default', ['watch']);
+    grunt.registerTask('default', ['watch:watch']);
   
 };

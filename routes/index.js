@@ -9,6 +9,7 @@
 'use strict';
 var express = require('express');
 var router = express.Router();
+var log = require('../src/logger').logger;
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -16,7 +17,9 @@ router.get('/', function(req, res) {
 
     if (!req.user) {
         userDisplayName = '- "not logged in user"';
+        log.info('Serving root (index) for user not logged in');
     } else {
+        log.info('Serving root (index) for logged in user');
         userDisplayName = req.user.displayName;
     }
     

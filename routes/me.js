@@ -12,7 +12,7 @@
 var express = require('express');
 var router = express.Router();
 const MicrosoftGraph = require('@microsoft/microsoft-graph-client');
-var log = require('../src/logger');
+var log = require('../src/logger').logger;
 var authUtil = require('../src/authutil');
 
 /*

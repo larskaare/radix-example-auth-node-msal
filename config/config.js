@@ -71,7 +71,8 @@ exports.creds = {
 
 
     // Optional, 'error', 'warn' or 'info'
-    loggingLevel: 'warn',
+    // for the passport middleware
+    loggingLevel: 'info',
 
     // Log private information - false = log PI, true = do not log
     loggingNoPII: true,
@@ -88,3 +89,10 @@ exports.creds = {
 
 // The url you need to go to destroy the session with AAD
 exports.destroySessionUrl = 'https://login.microsoftonline.com/common/oauth2/logout?post_logout_redirect_uri=';
+
+// Defining vars for logging
+exports.logging = {
+    logzio: 'false',
+    expressLogLevel: 'info'
+};
+

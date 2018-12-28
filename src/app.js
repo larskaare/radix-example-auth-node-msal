@@ -22,9 +22,8 @@ var passport = require('passport');
 var helmet = require('helmet');
 var config = require('../config/config');
 var OIDCStrategy = require('passport-azure-ad').OIDCStrategy;
-var log = require('../src/logger');
+var log = require('../src/logger').logger;
 var apputils = require('../src/apputils');
-
 
 // Getting and normalising port for server
 var port = apputils.normalizePort(process.env.PORT || '3000');
@@ -42,7 +41,7 @@ if (hostDomainName !== 'localhost') {
 
 hostUrlWithPort = hostUrl + ':' + port;
 
-log.info('Setting host url to ', hostUrl);
+log.info('Setting host url to ' + hostUrl);
 
 // Reading vital config from environment variables
 //
@@ -61,6 +60,9 @@ if (hostDomainName !== 'localhost') {
     localConfig.REDIRECTURL = hostUrlWithPort + (process.env.REDIRECTURL || config.creds.redirectUrl);
     localConfig.DESTROYSESSIONURL =  (process.env.DESTROYSESSIONURL || config.destroySessionUrl) + hostUrlWithPort;
 }
+
+log.info('Redirect URL ' + localConfig.REDIRECTURL);
+log.info('Destroy session URL ' + localConfig.DESTROYSESSIONURL);
 
 /******************************************************************************
  * Set up passport in the app 
@@ -88,7 +90,7 @@ var users = [];
 var findByOid = function(oid, fn) {
     for (var i = 0, len = users.length; i < len; i++) {
         var user = users[i];
-        log.info('we are using user: ', user.sub);
+        log.info('we are using user: ' + user.sub);
         if (user.oid === oid) {
             return fn(null, user);
         }
@@ -162,7 +164,7 @@ function(iss, sub, profile, accessToken, refreshToken, done) {
 
 
 //-----------------------------------------------------------------------------
-// Config the app, include middlewares
+// Config the app, include the middleware
 //-----------------------------------------------------------------------------
 
 var indexRouter = require('../routes/index');
@@ -175,14 +177,8 @@ app.set('port', port);
 app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'ejs');
 
-//Defining logger
-app.use(require('express-bunyan-logger')({
-    name: 'logger',
-    streams: [{
-        level: config.creds.loggingLevel,
-        stream: process.stdout
-    }]
-}));
+//Using Bunyan for the middleware logging
+app.use(require('../src/logger').mlogger);
 
 // app.use(logger('dev'));
 app.use(express.json());
@@ -244,6 +240,7 @@ app.get('/login',
 // redirected to '/' (home page); otherwise, it passes to the next middleware.
 app.get('/auth/openid/return',
     function(req, res, next) {
+        log.info('Return URL requested (get)');
         passport.authenticate('azuread-openidconnect', 
             { 
                 response: res,                      // required
@@ -262,9 +259,10 @@ app.get('/auth/openid/return',
 // redirected to '/' (home page); otherwise, it passes to the next middleware.
 app.post('/auth/openid/return',
     function(req, res, next) {
+        log.info('Return URL requested (post)');
         passport.authenticate('azuread-openidconnect', 
             { 
-                response: res,                      // required
+                response: res,               // required
                 failureRedirect: '/'  
             }
         )(req, res, next);
@@ -277,6 +275,7 @@ app.post('/auth/openid/return',
 // 'logout' route, logout from passport, and destroy the session with AAD.
 app.get('/logout', function(req, res){
     req.session.destroy(function() {
+        log.info('Logut requested');
         req.logOut();
         res.redirect(localConfig.DESTROYSESSIONURL);
     });
