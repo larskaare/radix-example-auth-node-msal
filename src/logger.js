@@ -41,7 +41,8 @@ if (enableLogzIo()) {
 
     //Defining logging for Logzio
     var logzioLoggerOptions = {
-        token: (process.env.LOGZTOKEN || '')
+        token: (process.env.LOGZTOKEN || ''),
+        protocol: 'https'
     };
     var logzioStream = new logzioBunyanStream(logzioLoggerOptions);
     var loggerLogzIo = bunyan.createLogger({
