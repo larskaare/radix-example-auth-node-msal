@@ -72,7 +72,7 @@ exports.creds = {
 
     // Optional, 'error', 'warn' or 'info'
     // for the passport middleware
-    loggingLevel: 'info',
+    loggingLevel: 'warn',
 
     // Log private information - false = log PI, true = do not log
     loggingNoPII: true,
@@ -93,6 +93,6 @@ exports.destroySessionUrl = 'https://login.microsoftonline.com/common/oauth2/log
 // Defining vars for logging
 exports.logging = {
     logzio: 'false',
-    expressLogLevel: 'info'
+    expressLogLevel: 'warn'
 };
 
