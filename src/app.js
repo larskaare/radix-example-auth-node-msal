@@ -169,6 +169,7 @@ function(iss, sub, profile, accessToken, refreshToken, done) {
 
 var indexRouter = require('../routes/index');
 var meRouter = require('../routes/me');
+var moitoringRouter = require('../routes/monitoring');
 
 var app = express();
 
@@ -213,7 +214,7 @@ app.use(favicon(path.join(__dirname, '../public', 'favicon.ico')));
 
 app.use('/', indexRouter);
 app.use('/me', meRouter);
-
+app.use('/monitoring',moitoringRouter);
 //
 // Handling Authentication and login's  
 //

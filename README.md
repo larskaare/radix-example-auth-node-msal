@@ -20,7 +20,8 @@ Table of contents:
         - [1.5.2. Running the application in docker](#152-running-the-application-in-docker)
     - [1.6. Deploying to Omnia Radix](#16-deploying-to-omnia-radix)
     - [1.7. Logging to Logz.io](#17-logging-to-logzio)
-    - [1.8. Acknowledgements](#18-acknowledgements)
+    - [1.8. Liveness probe / health end-point](#18-liveness-probe--health-end-point)
+    - [1.9. Acknowledgements](#19-acknowledgements)
 
 <!-- /TOC -->
 
@@ -163,7 +164,10 @@ Logging to an external provider is added as an example. Logz.io has been tested.
 * Alternatively you can define the environment variable ```LOGZIO``` and give it the string value ```"true"```.
 * Store the token you have gotten from Logz.io in an environment variable named ```LOGZTOKEN```. This has to be reflected in your runtime environment - such as Docker.
 
+## 1.8. Liveness probe / health end-point
 
-## 1.8. Acknowledgements
+An example liveness probe is available on ```/monitoring/alive```. It will basically return a 200 if the app is ready to do it's work, 500 if not.
+
+## 1.9. Acknowledgements
 
 Based on the example [AppModelv2-WebApp-OpenIDConnect-nodejs](https://github.com/AzureADQuickStarts/AppModelv2-WebApp-OpenIDConnect-nodejs)
