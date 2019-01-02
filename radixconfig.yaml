@@ -22,7 +22,7 @@ spec:
             CLIENTID: "b4a5aab6-6eb4-4be0-a978-cd0870f36963"
             REDIRECTURL: "/auth/openid/return"
             DESTROYSESSIONURL: "https://login.microsoftonline.com/common/oauth2/logout?post_logout_redirect_uri="
-            LOGZIO: "true"
+            LOGZIO: "false"
       secrets:
         - CLIENTSECRET
         - LOGZTOKEN
