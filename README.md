@@ -65,7 +65,7 @@ export CLIENTSECRET=""
 export DESTROYSESSIONURL=""
 ```
 
-Remember to escape special chars like $ in the environment variables (like secrets)
+Remember to escape special chars like $ in the environment variables (like secrets) when running locally - and remove the escaping when defining the variables for Radix (config or web console)
 
 **Optional configuration for production apps:**
 
