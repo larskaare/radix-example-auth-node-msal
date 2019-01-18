@@ -2,8 +2,6 @@
 
 # 1. Omnia Radix Auth Example (OIDC)
 
-[![Known Vulnerabilities](https://snyk.io/test/github/larskaare/radix-example-auth-node-msal/badge.svg?targetFile=package.json)](https://snyk.io/test/github/larskaare/radix-example-auth-node-msal?targetFile=package.json)
-
 Table of contents:
 <!-- TOC -->
 
