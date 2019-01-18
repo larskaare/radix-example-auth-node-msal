@@ -8,7 +8,7 @@ spec:
       build:
         from: master
   components:
-    - name: singlepageapp
+    - name: www
       src: .
       ports:
        - name: http
