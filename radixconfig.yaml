@@ -25,4 +25,4 @@ spec:
             LOGZIO: "false"
       secrets:
         - CLIENTSECRET
-        - LOGZTOKEN
+#        - LOGZTOKEN
