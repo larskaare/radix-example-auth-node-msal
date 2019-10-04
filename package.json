@@ -37,7 +37,7 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "eslint": "^5.8.0",
-    "grunt": "^1.0.3",
+    "grunt": "^1.0.4",
     "grunt-contrib-watch": "^1.1.0",
     "grunt-eslint": "^21.0.0",
     "grunt-mocha-cli": "^4.0.0",
